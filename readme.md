@@ -1,8 +1,8 @@
 
 <h1>Routal</h1>
- A simple, light, Modern Router that supports pushState (update page without reloading), links stay SEO friendly
-
-* Best served with lit-element
+ A universal, simple, light, modern Router that supports pushState (update page without reloading), links stay SEO friendly
+<br>
+* Tested well with lit-element
 
 ## Usage
 
