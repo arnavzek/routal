@@ -9,6 +9,10 @@
 Hot to include?
 ```
 import { routal } from https://unpkg.com/routal@1.0.0/routal.js
+
+OR
+
+npm i routal
 ```
 
 How to Initialize?
