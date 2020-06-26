@@ -1,0 +1,37 @@
+{
+  "name": "routal",
+  "version": "1.0.0",
+  "description": "A simple, light, modern, universal JavaScript router",
+  "main": "routal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsarnavsingh/routal.git"
+  },
+  "keywords": [
+    "A",
+    "simple",
+    "light",
+    "Modern",
+    "Router",
+    "that",
+    "supports",
+    "pushState",
+    "(update",
+    "page",
+    "without",
+    "reloading)",
+    "links",
+    "stay",
+    "SEO",
+    "friendly"
+  ],
+  "author": "Best served with lit-element",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itsarnavsingh/routal/issues"
+  },
+  "homepage": "https://github.com/itsarnavsingh/routal#readme"
+}
