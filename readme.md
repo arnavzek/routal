@@ -2,9 +2,14 @@
 <h1>Routal</h1>
  A universal, simple, light, modern Router that supports pushState (update page without reloading), links stay SEO friendly
 <br>
-* Tested well with lit-element
+* Tested well with lit-element (check out the demo code @ index.js & index.html)
 
 ## Usage
+
+Hot to include?
+```
+import { routal } from https://unpkg.com/routal@1.0.0/routal.js
+```
 
 How to Initialize?
 ```
