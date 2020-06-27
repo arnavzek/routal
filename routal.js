@@ -1,35 +1,55 @@
 
+
 function cleanFirstSlash(path){
     if(path[0] === '/') path = path.substr(1,path.length-1)
     return path
 }
 
 
-let routal = new class {
-    run(routeConfig,callback){
+class Routal {
+
+    //cotainer could be a query pattern like #id of an element itself like this.querySelector('#id')
+    constructor(routeConfig,callback,container = document.body){
         this.routeConfig = routeConfig
         this.callback = callback
+        this.container = container
+
         window.addEventListener('onpopstate',this.processRoutes.bind(this))
         window.addEventListener('load',this.processRoutes.bind(this))
-
         this.link = this.link.bind(this)
     }
 
 
-    processRoutes(){
-
+    processRoutes(handoverRefresh){
+        console.log('refreshing')
         let callback = this.callback
         let path = cleanFirstSlash(location.pathname)
+
+        if(typeof this.container === 'string') this.container = document.querySelector(this.container)
+
         for(let i = 0; i<= this.routeConfig.length-1; i++){
 
             let route = this.routeConfig[i]
+
+            returnCallback = returnCallback.bind(this)
+            function returnCallback(component){
+                console.log(component)
+                this.duration = route.duration
+                this.transitionAxis = route.axis
+                this.transitionType = route.transition
+                if(handoverRefresh === true) return ()=>{ callback(component)}
+                
+                return callback(component)
+            }
+            
+            
 
             let patternPath = cleanFirstSlash(route['pattern'])
 
 
 
             if(patternPath  === path){
-                return callback(route.component())
+                return returnCallback(route.component())
             }else if(patternPath.indexOf(':') !== -1 && patternPath.split('/').length === path.split('/').length){
                 let locationOfFirstColon = patternPath.indexOf(':')
                 let pathBeforeColon = patternPath.substr(0,locationOfFirstColon)
@@ -43,10 +63,10 @@ let routal = new class {
                     for(let j = 0; j <= paramPattern.length -1; j++){
                         let paraField = paramPattern[j].replace(':','')
                         let paraValue = paramValues[j]
-                        param[paraField] = paraValue
+                        param[paraField] = decodeURIComponent(paraValue)
                     }
 
-                    return callback(route.component(param))
+                    return returnCallback(route.component(param))
                 }
 
             }else if(patternPath.indexOf('*') !== -1){
@@ -56,7 +76,7 @@ let routal = new class {
                 //format /a/b/*
 
                 if(pathBeforeAsterix === pathBeforeAsterixCurrent){
-                    return callback(route.component())
+                    return returnCallback(route.component())
                 }
 
             }
@@ -70,8 +90,8 @@ let routal = new class {
                     }
                 }
 
-                if(componentFor404) return callback(componentFor404())
-                return callback(html`404 Not Found`)
+                if(componentFor404) return returnCallback(componentFor404())
+                return returnCallback(html`404 Not Found`)
             } 
 
         }
@@ -82,13 +102,111 @@ let routal = new class {
         let path = e.target.getAttribute('href')
         
         window.history.pushState('','',path)
-        this.processRoutes()
+        let refresh = this.processRoutes(true)
+        
+        if(!this.transitionAxis) this.transitionAxis = 'x'
+        
+
+        let unit = 'vw'
+        if(this.transitionAxis === 'y') unit = 'vh'
+
+        if(!this.transitionType) this.transitionType = 'slide'
+
+        this.container.style.display = 'block'
+
+        if(this.transitionType === 'slide'){
+            if(!this.duration) this.duration = 0.5
+            
+            this.container.style.transition = `all ${this.duration}s ease-out`
+            this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(-100${unit})`
+
+            setTimeout(()=>{
+                refresh()
+                this.container.style.transition = 'unset'
+                this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(100${unit})`
+                setTimeout(()=>{
+                    this.container.style.transition = `all ${this.duration}s ease-out`
+                    this.container.style.transform = `unset`
+                },100)
+
+            },this.duration*1000)
+
+        }else if(this.transitionType === 'flip'){
+
+            if(!this.duration) this.duration = 1
+            document.body.style.perspective = '300px'
+            function hideChild(){
+                if(this.container.children[0]){
+                    this.container.children[0].style.display = 'block'
+                    this.container.children[0].style.transition = 'unset'
+                    this.container.children[0].style.opacity = 0
+                } 
+            }
+
+            function setCss(rule){
+                var sheet = window.document.styleSheets[0];
+                sheet.insertRule(rule, sheet.cssRules.length);
+            }
+
+            hideChild = hideChild.bind(this)
+
+            this.containerName = this.container.getAttribute('id')
+            if(this.containerName){
+                this.containerName = '#'+this.containerName
+            }else if(document.body.classList.length !== 0){
+                this.containerName = '.'+this.container.classList[0]
+            }else{
+                this.containerName = 'routalContainer'+Math.random()
+                this.container.setAttribute('id',this.containerName)
+            }
+
+            
+            let rotateY= this.container.style.transform.replace(/[^\d.]/g, '')
+            rotateY = Number(rotateY)
+
+            
+            setCss(`
+                ${this.containerName} > * {
+                    display:block;
+                    opacity: 0; 
+                    transition:unset;
+                }
+            `)
+           
+            
+            this.container.style.transition = `all ${this.duration}s`
+            this.container.style.transform = `rotateY(${rotateY+180}deg)`
+
+            refresh()
+
+
+            setTimeout(()=>{
+
+                this.container.children[0].style.transform = `rotateY(${rotateY+180}deg)`
+                setCss(`${this.containerName} > * {
+                        display: block;
+                        opacity:1;
+                        transition:opacity ${this.duration/3}s;
+                    }`)
+
+            },(this.duration*1000)/2)
+
+
+
+
+
+
+
+        }
+
+
+        
     }
 
 
 }
 
-
+//https://javascript.info/modules-dynamic-imports
 
 
 /*
@@ -115,6 +233,10 @@ X return the component name to render @ second param of constructor
 X Add param to the calback
 X Add support for /a/b/* (on it!)
 
+There are a lot of libraries like routal so routal needs to offer something new to the web and It's a no brainer that 
+it must be native app like animation on routing 
+
+* Add support for transition animation
 
 ( our process of taking notes also makes coming back to our own code very confortable)
 
@@ -131,9 +253,13 @@ precaution href attribute /a and a mean the same but while matching it reflectio
 
 The benefit of taking planing notes inside the code itself is you can later use it as code briefing, If you want to open source it, code briefing is a must have
 
+Let's add more animation types
 
-YAY!
+* slideX
+* slideY
+* hangX
+* hangY
 
-Let's do some finishing.
+
 */
-export {routal}
+export {Routal}

@@ -1,6 +1,7 @@
 
 <h1>Routal</h1>
- A simple, universal, light, modern Router that supports pushState (update pages without reloading), links stay SEO friendly
+ A simple, universal, light, modern Router with animation skills that supports pushState (update pages without reloading) and keep links SEO friendly
+
 <br><br>
 * Tested well with lit-element (check out the demo code @ index.js & index.html)
 
@@ -18,11 +19,11 @@ npm i routal
 How to Initialize?
 ```
 
-   let config = [
-      {pattern:'home',component:(param)=>{ return html`<the-home .param=${param}></the-home>` }},
-      {pattern:'user/:id',component:(param)=>{return html`<the-user .param=${param}></the-user>`} },
-      {pattern:'404',component:(param)=>{return html` Nothing Here to show`} },
-      {pattern:'settings/*',component:()=>{return html`<the-settings></the-settings>`}},
+    let config = [
+      {pattern:'home',transition:'slide',component:(param)=>{return html`<the-home .param=${param}></the-home>`}},
+      {pattern:'user/:id',transition:'slide',component:(param)=>{return html`<the-user .param=${param}></the-user>`} },
+      {pattern:'404',transition:'flip',component:(param)=>{return html` Nothing Here to show`} },
+      {pattern:'settings/*',transition:'flip',component:()=>{return html`<the-settings></the-settings>`}},
     ]
     
 
@@ -35,7 +36,7 @@ How to Initialize?
 What to do with links?
 ```
 // for lit-element
-<a @click=${routal.link} href="/user/punyBot">punyBot</a>
+<a @click=${this.routal.link} href="/user/punyBot">punyBot </a> 
 
 //for vanilla js
 <a onclick='routal.link()' href="/user/punyBot">punyBot</a>
