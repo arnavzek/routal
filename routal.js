@@ -116,7 +116,7 @@ class Routal {
 
         if(this.transitionType === 'slide'){
             if(!this.duration) this.duration = 0.5
-            
+
             this.container.style.transition = `all ${this.duration}s ease-out`
             this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(-100${unit})`
 
@@ -134,7 +134,7 @@ class Routal {
         }else if(this.transitionType === 'flip'){
 
             if(!this.duration) this.duration = 1
-            document.body.style.perspective = '300px'
+            document.body.style.perspective = '500px'
             function hideChild(){
                 if(this.container.children[0]){
                     this.container.children[0].style.display = 'block'

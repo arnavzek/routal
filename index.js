@@ -29,7 +29,7 @@ class settings extends LitElement {
     }
   }
   render() {
-    return html`<h1>Welcome to  🍟🎧🐜🏉🍎📛 🐑👋👆🔚 settings</h1>
+    return html`<h1>Welcome🍟 to settings🐜🏉🍎👋</h1>
      sum as their default model text, and a 👯🌾🏇🌷 Ipsum as their de 🎭🕘🎈🎐out. The point 🐅🎹💶 🍬👑🍧🏡 📺🔝📕🔔`
   }
 }
@@ -92,7 +92,7 @@ class App extends LitElement {
   render() {
     return html`
       <div>
-        <h1>MyAwesomeApp</h1>
+        <h1>Routal Demo</h1>
         <a @click=${this.routal.link} href="/user/Sir Pac">Sir Pac </a> 
 
         <a @click=${this.routal.link} href="/user/Puny Bot">Puny Bot </a>

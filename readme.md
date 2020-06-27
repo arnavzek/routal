@@ -9,7 +9,7 @@
 
 Hot to include?
 ```
-import { routal } from https://unpkg.com/routal@1.0.0/routal.js
+import { Routal } from https://unpkg.com/routal@1.0.0/routal.js
 
 OR
 
@@ -19,17 +19,22 @@ npm i routal
 How to Initialize?
 ```
 
+
     let config = [
-      {pattern:'home',transition:'slide',component:(param)=>{return html`<the-home .param=${param}></the-home>`}},
-      {pattern:'user/:id',transition:'slide',component:(param)=>{return html`<the-user .param=${param}></the-user>`} },
+      {pattern:'home',transition:'slide',axis:'y',component:(param)=>{return html`<the-home .param=${param}></the-home>`}},
+      {pattern:'user/:id',transition:'slide',duration:0.2,component:(param)=>{return html`<the-user .param=${param}></the-user>`} },
       {pattern:'404',transition:'flip',component:(param)=>{return html` Nothing Here to show`} },
       {pattern:'settings/*',transition:'flip',component:()=>{return html`<the-settings></the-settings>`}},
     ]
     
 
-    routal.run(config,(routeComponent)=>{
+    this.routal = new Routal(config,(routeComponent)=>{
+      console.log('callback received')
       this.routeComponent = routeComponent
-    })
+    },'#container')
+
+     //cotainer could be a query pattern like #id of an element itself like this.querySelector('#id')
+     //Routal(config,callback,container) container is optional, It's default value is document.body
 
 ```
 
