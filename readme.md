@@ -2,16 +2,14 @@
 <h1>Routal</h1>
  A simple, universal, light, modern Router with animation skills that supports pushState (update pages without reloading) and keep links SEO friendly
  <br> <br>
-<video id="gif-mp4" poster="" style="margin:0;padding:0" width="480" height="270" autoplay="" loop="">
-                <source src="https://media2.giphy.com/media/Ss69lZORpmRxeg0PJW/giphy.mp4" type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;">
-                <img src="https://media2.giphy.com/media/Ss69lZORpmRxeg0PJW/giphy.gif" title="Your browser does not support the mp4 video codec.">
-            </video>
+<img src="https://media2.giphy.com/media/H4guKWG4L9Ak4L7lM4/giphy.gif" title="Your browser does not support the mp4 video codec.">
   <br>
 * Tested well with lit-element (check out the demo code @ index.js & index.html)<br>
 * Tested well with vanilla JS<br>
 
 
 ## Usage
+
 
 Hot to include?
 ```
@@ -22,7 +20,11 @@ OR
 npm i routal
 ```
 
-How to Initialize?
+
+<br>
+
+
+
 ```
 
 
