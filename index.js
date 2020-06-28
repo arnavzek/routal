@@ -75,7 +75,6 @@ class App extends LitElement {
 
 
     this.routal = new Routal(config,(routeComponent)=>{
-      console.log('callback received')
       this.routeComponent = routeComponent
     },'#container')
 

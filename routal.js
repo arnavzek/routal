@@ -21,7 +21,7 @@ class Routal {
 
 
     processRoutes(handoverRefresh){
-        console.log('refreshing')
+
         let callback = this.callback
         let path = cleanFirstSlash(location.pathname)
 
@@ -33,7 +33,6 @@ class Routal {
 
             returnCallback = returnCallback.bind(this)
             function returnCallback(component){
-                console.log(component)
                 this.duration = route.duration
                 this.transitionAxis = route.axis
                 this.transitionType = route.transition
@@ -114,8 +113,31 @@ class Routal {
 
         this.container.style.display = 'block'
 
+        this.containerName = this.container.getAttribute('id')
+        if(this.containerName){
+            this.containerName = '#'+this.containerName
+        }else{
+            this.containerName = 'routalContainer'+Math.random()
+            this.container.setAttribute('id',this.containerName)
+        }
+
+        function setCss(rule){
+            var sheet = window.document.styleSheets[0];
+            sheet.insertRule(rule, sheet.cssRules.length);
+        }
+        
+
+
         if(this.transitionType === 'slide'){
             if(!this.duration) this.duration = 0.5
+
+            setCss(`
+                ${this.containerName} > * {
+                    display:block;
+                    opacity: 0; 
+                    transition:opacity ${this.duration/1.5}s;
+                }
+            `)
 
             this.container.style.transition = 'unset'
             this.container.style.transform = 'unset'
@@ -126,6 +148,12 @@ class Routal {
 
                 setTimeout(()=>{
                     refresh()
+                    setCss(`${this.containerName} > * {
+                        display: block;
+                        opacity:1;
+                        transition:opacity ${this.duration/3}s;
+                    }`)
+
                     this.container.style.transition = 'unset'
                     this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(100${unit})`
                     setTimeout(()=>{
@@ -140,32 +168,8 @@ class Routal {
 
             if(!this.duration) this.duration = 1
             document.body.style.perspective = '500px'
-            function hideChild(){
-                if(this.container.children[0]){
-                    this.container.children[0].style.display = 'block'
-                    this.container.children[0].style.transition = 'unset'
-                    this.container.children[0].style.opacity = 0
-                } 
-            }
 
-            function setCss(rule){
-                var sheet = window.document.styleSheets[0];
-                sheet.insertRule(rule, sheet.cssRules.length);
-            }
 
-            hideChild = hideChild.bind(this)
-
-            this.containerName = this.container.getAttribute('id')
-            if(this.containerName){
-                this.containerName = '#'+this.containerName
-            }else if(document.body.classList.length !== 0){
-                this.containerName = '.'+this.container.classList[0]
-            }else{
-                this.containerName = 'routalContainer'+Math.random()
-                this.container.setAttribute('id',this.containerName)
-            }
-
-            
             let rotateY= this.container.style.transform.replace(/[^\d.]/g, '')
             rotateY = Number(rotateY)
 
@@ -174,7 +178,7 @@ class Routal {
                 ${this.containerName} > * {
                     display:block;
                     opacity: 0; 
-                    transition:unset;
+                    transition:opacity ${this.duration/3}s;
                 }
             `)
            
