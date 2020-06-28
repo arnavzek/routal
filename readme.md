@@ -4,8 +4,10 @@
  <br>
 <img src="https://media3.giphy.com/media/Rf4CG6Bu9p7vPfeXHd/giphy.gif">
   <br>
-* Tested well with lit-element (check out the demo code @ index.js & index.html)
-* Tested well with vanilla JS
+* Tested well with lit-element (check out the demo code @ index.js & index.html)<br>
+* Tested well with vanilla JS<br>
+
+
 ## Usage
 
 Hot to include?
