@@ -117,20 +117,25 @@ class Routal {
         if(this.transitionType === 'slide'){
             if(!this.duration) this.duration = 0.5
 
-            this.container.style.transition = `all ${this.duration}s ease-out`
-            this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(-100${unit})`
+            this.container.style.transition = 'unset'
+            this.container.style.transform = 'unset'
 
             setTimeout(()=>{
-                refresh()
-                this.container.style.transition = 'unset'
-                this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(100${unit})`
+                this.container.style.transition = `all ${this.duration}s ease-out`
+                this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(-100${unit})`
+
                 setTimeout(()=>{
-                    this.container.style.transition = `all ${this.duration}s ease-out`
-                    this.container.style.transform = `unset`
-                },100)
+                    refresh()
+                    this.container.style.transition = 'unset'
+                    this.container.style.transform = `translate${this.transitionAxis.toUpperCase()}(100${unit})`
+                    setTimeout(()=>{
+                        this.container.style.transition = `all ${this.duration}s ease-out`
+                        this.container.style.transform = `unset`
+                    },100)
 
-            },this.duration*1000)
-
+                },this.duration*1000)
+            },100)
+            
         }else if(this.transitionType === 'flip'){
 
             if(!this.duration) this.duration = 1
