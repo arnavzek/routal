@@ -1,6 +1,6 @@
 {
   "name": "routal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple, light, modern, universal JavaScript router",
   "main": "routal.js",
   "scripts": {

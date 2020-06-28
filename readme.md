@@ -1,10 +1,11 @@
 
 <h1>Routal</h1>
  A simple, universal, light, modern Router with animation skills that supports pushState (update pages without reloading) and keep links SEO friendly
-
-<br><br>
+ <br>
+<img src='https://giphy.com/gifs/Rf4CG6Bu9p7vPfeXHd'>
+  <br>
 * Tested well with lit-element (check out the demo code @ index.js & index.html)
-
+* Tested well with vanilla JS
 ## Usage
 
 Hot to include?
