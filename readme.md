@@ -29,10 +29,10 @@ npm i routal
 
 
     let config = [
-      {pattern:'home',transition:'slide',axis:'y',component:(param)=>{return html`<the-home .param=${param}></the-home>`}},
-      {pattern:'user/:id',transition:'slide',duration:0.2,component:(param)=>{return html`<the-user .param=${param}></the-user>`} },
-      {pattern:'404',transition:'flip',component:(param)=>{return html` Nothing Here to show`} },
-      {pattern:'settings/*',transition:'flip',component:()=>{return html`<the-settings></the-settings>`}},
+      {pattern:'home',transition:'slide',axis:'y',component:(param)=>html`<the-home .param=${param}></the-home>`},
+      {pattern:'user/:id',transition:'slide',duration:0.2,component:(param)=>html`<the-user .param=${param}></the-user>`},
+      {pattern:'404',transition:'flip',component:(param)=>html` Nothing Here to show`},
+      {pattern:'settings/*',transition:'flip',component:()=>html`<the-settings></the-settings>`},
     ]
     
 
@@ -41,7 +41,7 @@ npm i routal
       this.routeComponent = routeComponent
     },'#container')
 
-     //cotainer could be a query pattern like #id of an element itself like this.querySelector('#id')
+     //container could be a query pattern like #id of an element itself like this.querySelector('#id')
      //Routal(config,callback,container) container is optional, It's default value is document.body
 
 ```
@@ -49,7 +49,7 @@ npm i routal
 What to do with links?
 ```
 // for lit-element
-<a @click=${this.routal.link} href="/user/punyBot">punyBot </a> 
+<a @click=${this.routal.link} href="/user/punyBot">punyBot</a> 
 
 //for vanilla js
 <a onclick='routal.link()' href="/user/punyBot">punyBot</a>
